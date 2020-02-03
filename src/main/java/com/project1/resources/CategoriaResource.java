@@ -1,31 +1,26 @@
 package com.project1.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project1.domain.Categoria;
+import com.project1.services.CategoriaService;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	private List<Categoria> listar() {
-		
-		Categoria cat1 = new Categoria(1,"Informática");
-		Categoria cat2 = new Categoria(2,"Escritório");
-		
-		List<Categoria> listaDeCategoria = new ArrayList<Categoria>();
-		
-		listaDeCategoria.add(cat1);
-		listaDeCategoria.add(cat2);
-		
-		return listaDeCategoria;
-		
+	@Autowired
+	private CategoriaService servicoCategoria;
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	private ResponseEntity<?> buscar(@PathVariable Integer id) {
+		Categoria objetoCategoria = servicoCategoria.buscar(id);
+		return ResponseEntity.ok().body(objetoCategoria);
 	}
 	
 }
