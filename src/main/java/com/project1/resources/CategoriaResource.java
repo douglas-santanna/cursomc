@@ -1,5 +1,7 @@
 package com.project1.resources;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +19,8 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService servicoCategoria;
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	private ResponseEntity<?> buscar(@PathVariable Integer id) {
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> buscar(@PathVariable Integer id){
 		Categoria objetoCategoria = servicoCategoria.buscar(id);
 		return ResponseEntity.ok().body(objetoCategoria);
 	}

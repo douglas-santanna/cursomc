@@ -18,5 +18,4 @@ public class CategoriaService {
 		Optional<Categoria> objetoCategoria = repositorioCategoria.findById(id);
 		return objetoCategoria.orElse(null);
 	}
-	
 }
