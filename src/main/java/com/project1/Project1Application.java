@@ -1,5 +1,6 @@
 package com.project1;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.project1.domain.Cidade;
 import com.project1.domain.Cliente;
 import com.project1.domain.Endereco;
 import com.project1.domain.Estado;
+import com.project1.domain.Pagamento;
+import com.project1.domain.PagamentoComBoleto;
+import com.project1.domain.PagamentoComCartao;
+import com.project1.domain.Pedido;
 import com.project1.domain.Produto;
+import com.project1.domain.enums.StatusPagamento;
 import com.project1.domain.enums.TipoCliente;
 import com.project1.repositories.CategoriaRepository;
 import com.project1.repositories.CidadeRepository;
 import com.project1.repositories.ClienteRepository;
 import com.project1.repositories.EnderecoRepository;
 import com.project1.repositories.EstadoRepository;
+import com.project1.repositories.PagamentoRepository;
+import com.project1.repositories.PedidoRepository;
 import com.project1.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,6 +49,12 @@ public class Project1Application implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository repositorioEndereco;
+	
+	@Autowired
+	private PedidoRepository repositorioPedido;
+	
+	@Autowired
+	private PagamentoRepository repositorioPagamento;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Project1Application.class, args);
@@ -91,7 +105,21 @@ public class Project1Application implements CommandLineRunner {
 		repositorioCliente.saveAll(Arrays.asList(cliente1));
 		repositorioEndereco.saveAll(Arrays.asList(endereco1,endereco2));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
+		Pedido pedido1 = new Pedido(null, sdf.parse("02/04/2020 21:50"), cliente1, endereco1);
+		Pedido pedido2 = new Pedido(null, sdf.parse("02/04/2020 22:00"), cliente1, endereco2);
+		
+		Pagamento pagamento1 = new PagamentoComCartao(null, StatusPagamento.PAGO, pedido1, 6);
+		pedido1.setPagamento(pagamento1);
+		
+		Pagamento pagamento2 = new PagamentoComBoleto(null, StatusPagamento.PENDENTE, pedido2, sdf.parse("10/04/2020 00:00"), null);
+		pedido2.setPagamento(pagamento2);
+		
+		cliente1.getPedidos().addAll(Arrays.asList(pedido1,pedido2));
+		
+		repositorioPedido.saveAll(Arrays.asList(pedido1,pedido2));
+		repositorioPagamento.saveAll(Arrays.asList(pagamento1,pagamento2));
 		
 		
 	}
