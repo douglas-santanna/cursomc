@@ -13,6 +13,7 @@ import com.project1.domain.Cidade;
 import com.project1.domain.Cliente;
 import com.project1.domain.Endereco;
 import com.project1.domain.Estado;
+import com.project1.domain.ItemPedido;
 import com.project1.domain.Pagamento;
 import com.project1.domain.PagamentoComBoleto;
 import com.project1.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.project1.repositories.CidadeRepository;
 import com.project1.repositories.ClienteRepository;
 import com.project1.repositories.EnderecoRepository;
 import com.project1.repositories.EstadoRepository;
+import com.project1.repositories.ItemPedidoRepository;
 import com.project1.repositories.PagamentoRepository;
 import com.project1.repositories.PedidoRepository;
 import com.project1.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class Project1Application implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository repositorioPagamento;
+	
+	@Autowired
+	private ItemPedidoRepository repositorioItemPedido;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Project1Application.class, args);
@@ -120,6 +125,19 @@ public class Project1Application implements CommandLineRunner {
 		
 		repositorioPedido.saveAll(Arrays.asList(pedido1,pedido2));
 		repositorioPagamento.saveAll(Arrays.asList(pagamento1,pagamento2));
+		
+		ItemPedido itemPedido1 = new ItemPedido(pedido1, p1, 0.00, 1, 2000.00);
+		ItemPedido itemPedido2 = new ItemPedido(pedido1, p3, 0.00, 2, 80.00);
+		ItemPedido itemPedido3 = new ItemPedido(pedido2, p2, 100.00, 1, 800.00);
+		
+		pedido1.getItens().addAll(Arrays.asList(itemPedido1,itemPedido2));
+		pedido2.getItens().addAll(Arrays.asList(itemPedido3));
+		
+		p1.getItens().addAll(Arrays.asList(itemPedido1));
+		p2.getItens().addAll(Arrays.asList(itemPedido2));
+		p3.getItens().addAll(Arrays.asList(itemPedido3));
+		
+		repositorioItemPedido.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
 		
 		
 	}
