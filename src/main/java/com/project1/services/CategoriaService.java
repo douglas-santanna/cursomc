@@ -1,5 +1,6 @@
 package com.project1.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class CategoriaService {
 		Optional<Categoria> objetoCategoria = repositorioCategoria.findById(id);
 		return objetoCategoria.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! id: "+ id +", Tipo do Objeto: "+ Categoria.class.getName()));
+	}
+	
+	public List<Categoria> buscarTodos() {
+		return repositorioCategoria.findAll();
 	}
 	
 	public Categoria insert(Categoria objetoCategoria) {

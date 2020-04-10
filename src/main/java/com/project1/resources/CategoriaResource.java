@@ -3,6 +3,8 @@ package com.project1.resources;
 
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.project1.domain.Categoria;
+import com.project1.dto.CategoriaDTO;
 import com.project1.services.CategoriaService;
 
 @RestController
@@ -27,6 +30,13 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> buscar(@PathVariable Integer id){
 		Categoria objetoCategoria = servicoCategoria.buscar(id);
 		return ResponseEntity.ok().body(objetoCategoria);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> buscarTodos(){
+		List<Categoria> ListaObjetosCategoria = servicoCategoria.buscarTodos();
+		List<CategoriaDTO> ListaDTOObjetosCategoria = ListaObjetosCategoria.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(ListaDTOObjetosCategoria);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
