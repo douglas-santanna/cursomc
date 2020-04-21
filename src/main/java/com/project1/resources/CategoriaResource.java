@@ -38,9 +38,9 @@ public class CategoriaResource {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> buscarTodos(){
-		List<Categoria> ListaObjetosCategoria = servicoCategoria.buscarTodos();
-		List<CategoriaDTO> ListaDTOObjetosCategoria = ListaObjetosCategoria.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(ListaDTOObjetosCategoria);
+		List<Categoria> listaObjetosCategoria = servicoCategoria.buscarTodos();
+		List<CategoriaDTO> listaDTOObjetosCategoria = listaObjetosCategoria.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDTOObjetosCategoria);
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)  
@@ -48,10 +48,10 @@ public class CategoriaResource {
 			@RequestParam(value="pagina", defaultValue="0") Integer pagina, 
 			@RequestParam(value="registroPorPagina", defaultValue="24") Integer registroPorPagina, 
 			@RequestParam(value="ordenacao", defaultValue="ASC") String ordenacao,
-			@RequestParam(value="coluna", defaultValue="nome") String coluna){
-		Page<Categoria> listaObjetosCategoria = servicoCategoria.buscarPaginacao(pagina, registroPorPagina, ordenacao, coluna);
-		Page<CategoriaDTO> listaDTOObjetoCategoria = listaObjetosCategoria.map( obj -> new CategoriaDTO(obj) ); 
-		return ResponseEntity.ok().body(listaDTOObjetoCategoria);		
+			@RequestParam(value="buscarPelaColuna", defaultValue="nome") String buscarPelaColuna){
+		Page<Categoria> listaObjetosCategoria = servicoCategoria.buscarPaginacao(pagina, registroPorPagina, ordenacao, buscarPelaColuna);
+		Page<CategoriaDTO> listaObjetoCategoriaDTO = listaObjetosCategoria.map( obj -> new CategoriaDTO(obj) ); 
+		return ResponseEntity.ok().body(listaObjetoCategoriaDTO);		
 	}
 
 	

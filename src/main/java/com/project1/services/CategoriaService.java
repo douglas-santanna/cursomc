@@ -32,9 +32,9 @@ public class CategoriaService {
 		return repositorioCategoria.findAll();
 	}
 	
-	public Page<Categoria> buscarPaginacao(Integer pagina, Integer registroPorPagina, String ordenacao, String coluna){
-		PageRequest pageRequest = PageRequest.of(pagina, registroPorPagina, Direction.valueOf(ordenacao), coluna);
-	return repositorioCategoria.findAll(pageRequest);
+	public Page<Categoria> buscarPaginacao(Integer pagina, Integer registroPorPagina, String ordenacao, String buscarPelaColuna){
+		PageRequest pageRequest = PageRequest.of(pagina, registroPorPagina, Direction.valueOf(ordenacao), buscarPelaColuna);
+		return repositorioCategoria.findAll(pageRequest);
 	}
 
 	
