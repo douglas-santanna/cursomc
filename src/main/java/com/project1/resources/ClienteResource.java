@@ -1,5 +1,6 @@
 package com.project1.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.project1.domain.Cliente;
 import com.project1.dto.ClienteDTO;
+import com.project1.dto.ClienteNovoDTO;
 import com.project1.services.ClienteService;
 
 @RestController
@@ -49,6 +52,14 @@ public class ClienteResource {
 		Page<Cliente> listaObjetoCliente = servicoCliente.buscarPaginacao(pagina, registroPorPagina, ordenacao, buscarPelaColuna);
 		Page<ClienteDTO> listaObjetoClienteDTO = listaObjetoCliente.map(obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok().body(listaObjetoClienteDTO);	
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNovoDTO objetoClienteNovoDTO){
+		Cliente objetoCliente= servicoCliente.fromDTO(objetoClienteNovoDTO);
+		objetoCliente = servicoCliente.insert(objetoCliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(objetoCliente.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
