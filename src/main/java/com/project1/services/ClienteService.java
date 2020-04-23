@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project1.domain.Cidade;
 import com.project1.domain.Cliente;
@@ -45,6 +46,7 @@ public class ClienteService {
 		return repositorioCliente.findAll(pageRequest);
 	}
 	
+	@Transactional
 	public Cliente insert(Cliente objetoCliente) {
 		objetoCliente.setId(null);
 		objetoCliente = repositorioCliente.save(objetoCliente);
@@ -86,7 +88,7 @@ public class ClienteService {
 			cliente.getTelefone().add(objetoClienteNovoDTO.getTelefone2());
 		}
 		if(objetoClienteNovoDTO.getTelefone3() != null) {
-			cliente.getTelefone().add(objetoClienteNovoDTO.getTelefone2());
+			cliente.getTelefone().add(objetoClienteNovoDTO.getTelefone3());
 		}
 		return cliente;
 	}
