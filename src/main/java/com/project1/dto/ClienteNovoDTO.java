@@ -2,22 +2,46 @@ package com.project1.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.project1.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNovoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Campo obrigatório")
+	@Length(min=3, max=120, message = "Deve conter mais que 3 caracteres e mais que 120")
 	private String nome;
+	
+	@NotEmpty(message="Campo obrigatório")
+	@Email(message = "E-mail inválido")
 	private String email;
+	
+	@NotEmpty(message="Campo obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@NotEmpty(message="Campo obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message="Campo obrigatório")
 	private String numero;
+	
+	
 	private String complemento;
+	@NotEmpty(message="Campo obrigatório")
 	private String bairro;
+	
+	@NotEmpty(message="Campo obrigatório")
 	private String cep;
 	
 	private Integer cidadeId;
 	
+	@NotEmpty(message="Campo obrigatório")
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
