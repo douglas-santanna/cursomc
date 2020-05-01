@@ -135,7 +135,7 @@ public class Pedido implements Serializable  {
 			builder.append("\n");
 			builder.append(itemEncontrado.toString());
 		}
-		builder.append("\n");
+		builder.append("\n\n");
 		builder.append("Valor total: ");
 		builder.append(nf.format(getValorTotal()));
 		return builder.toString();

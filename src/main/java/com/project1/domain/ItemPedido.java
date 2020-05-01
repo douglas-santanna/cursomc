@@ -91,8 +91,8 @@ public class ItemPedido implements Serializable {
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		StringBuilder builder = new StringBuilder();
-		builder.append("Produto: ");
-		builder.append(getProduto().getNome());
+		builder.append("\n --------- \n");
+		builder.append("Produto: " + getProduto().getNome());
 		builder.append("\n");
 		builder.append("Quantidade: ");
 		builder.append(getQuantidade());
